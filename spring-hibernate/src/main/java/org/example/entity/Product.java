@@ -14,8 +14,8 @@ import org.hibernate.annotations.GenericGenerator;
 @NamedQuery(name = "Product.findByProductId", query = "select productName,productDesc from Product p where p.productId=?1")
 public class Product implements Serializable {
     @Id
-//    @GeneratedValue(generator = "native")
-//    @GenericGenerator(name = "native", strategy = "native")
+    @GeneratedValue(generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long productId;
     @Column(name = "product_name")
     private String productName;

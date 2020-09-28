@@ -17,8 +17,8 @@ public class ProductController {
     public Object get(@PathVariable("id") long id) {
         return this.iProductService.get(id) ;
     }
-    @RequestMapping(value="/add")
-    public Object add(@RequestBody Product product) {
+    @RequestMapping(value="/add", method = RequestMethod.POST)
+    public Object add(@RequestBody  Product product) {
         return this.iProductService.add(product) ;
     }
     @RequestMapping(value="/list")

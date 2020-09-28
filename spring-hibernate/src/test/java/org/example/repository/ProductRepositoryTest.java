@@ -39,8 +39,8 @@ public class ProductRepositoryTest {
     @Test
     public void testSave(){
         Product product = new Product();
-        product.setProductId(1l);
-        product.setProductName("nameaaaa");
+//        product.setProductId(3l);
+        product.setProductName("nameb");
         product.setProductDesc("Test from JUnit4");
         Product  result = productRepository.save(product);
         System.out.println(result.toString());
