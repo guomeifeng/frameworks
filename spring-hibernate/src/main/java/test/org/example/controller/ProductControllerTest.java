@@ -6,9 +6,7 @@ import org.example.entity.Product;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.After;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -16,13 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.context.WebApplicationContext;
-
 import javax.annotation.Resource;
-
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -44,6 +37,7 @@ public class ProductControllerTest {
     @Before
     public void before() throws Exception {
         System.out.println("ProductControllerTest Begins...");
+        // Also can autowired mockMvc by setting AutoConfigureMockMvc. Here create from MockMvcBuilders manually
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
@@ -97,13 +91,13 @@ public class ProductControllerTest {
     @Test
     public void testList() throws Exception {
         RequestBuilder request = null;
-        //构造请求
+
         request = MockMvcRequestBuilders.get("/product/list");
-        //执行请求
+
         mockMvc.perform(request)
-                .andExpect(status().isOk())//返回HTTP状态为200
-                .andDo(print());//打印结果
-        //.andReturn();//想要返回结果，使用此方法
+                .andExpect(status().isOk())
+                .andDo(print());
+
     }
 
 
