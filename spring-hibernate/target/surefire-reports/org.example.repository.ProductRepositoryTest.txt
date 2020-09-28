@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: org.example.repository.ProductRepositoryTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.008 s <<< FAILURE! - in org.example.repository.ProductRepositoryTest
+initializationError  Time elapsed: 0.002 s  <<< ERROR!
+org.junit.runners.model.InvalidTestClassError: 
+Invalid test class 'org.example.repository.ProductRepositoryTest':
+  1. Method testFindAll() should be void
+
