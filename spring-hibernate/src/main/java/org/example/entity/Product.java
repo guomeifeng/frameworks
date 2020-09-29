@@ -2,8 +2,6 @@ package org.example.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import javax. persistence. *;
 import java.io.Serializable;

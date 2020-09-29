@@ -12,11 +12,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 
-//通过@Configuration注解，让Spring来加载该类配置
+
 @Configuration
-//通过@EnableSwagger2注解来启用Swagger2
 @EnableSwagger2
-//@ConditionalOnExpression 为Spring的注解，用户是否实例化本类，用于是否启用Swagger的判断（生产环境需要屏蔽Swagger）
 @ConditionalOnExpression("${swagger.enable:true}")
 public class SwaggerConfig {
 

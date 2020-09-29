@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.example.entity.Product;
 
+/**
+ * Product Management
+ * Created by Kelly Guo on 27/09/2020
+ */
 @RestController
 @RequestMapping("/product")
 @Api(tags = {"Product APIs"}, value = "Product Module")
