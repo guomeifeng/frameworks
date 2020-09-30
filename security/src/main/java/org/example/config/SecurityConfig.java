@@ -1,5 +1,6 @@
 package org.example.config;
 
+import org.example.entity.AdminUser;
 import org.example.entity.User;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                UmsAdminExample example = new UmsAdminExample();
-                example.createCriteria().andUsernameEqualTo(username);
                 List<User> userList = userRepository.findUsersByName(username);
                 if (userList != null && userList.size() > 0) {
-                    return new AdminUserDetails(userList.get(0));
+                    return new AdminUser(userList.get(0));
                 }
                 throw new UsernameNotFoundException("用户名或密码错误");
             }

@@ -8,10 +8,27 @@ import java.util.Collection;
 /*
  * Created by kelly on 30/09/2020.
  */
-public class AdminUser extends User implements UserDetails {
+public class AdminUser implements UserDetails {
+
+    private User user;
+
+    public AdminUser(User user){
+        this.user = user;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.getUsername();
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getPassword();
     }
 
     @Override
