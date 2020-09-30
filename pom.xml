@@ -7,7 +7,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <swagger.version>2.9.2</swagger.version>
     </properties>
+
     <groupId>org.example</groupId>
     <artifactId>frameworks</artifactId>
     <packaging>pom</packaging>
@@ -17,6 +19,7 @@
         <module>entity</module>
         <module>spring-mybatis</module>
         <module>spring-hibernate</module>
+        <module>security</module>
 
     </modules>
     <parent>
@@ -40,6 +43,15 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/com.github.springtestdbunit/spring-test-dbunit -->
         <dependency>
             <groupId>com.github.springtestdbunit</groupId>
@@ -58,7 +70,30 @@
             <artifactId>gson</artifactId>
             <version>2.8.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <!-- swagger2 ui -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
     </dependencies>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*Test.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
