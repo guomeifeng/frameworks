@@ -23,31 +23,31 @@ public class AdminUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.getUsername();
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.getPassword();
+        return this.user.getUsername();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

@@ -13,13 +13,13 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name="user")
-@NamedQuery(name = "User.findByUsername", query = "select username,password from User u where u.username=?1")
+@NamedQuery(name = "User.findByName", query = "select username, password from User u where u.username=?1")
 public class User implements Serializable {
     @Id
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-    @Column(name = "username")
+    @Column(name = "name")
     private String username;
     @Column(name = "password")
     private String password;
