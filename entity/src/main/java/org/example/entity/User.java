@@ -19,7 +19,7 @@ public class User implements Serializable {
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-    @Column(name = "name")
+    @Column(name = "name", length = 40)
     private String username;
     @Column(name = "password")
     private String password;
