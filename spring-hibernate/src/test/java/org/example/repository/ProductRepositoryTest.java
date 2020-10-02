@@ -26,7 +26,7 @@ public class ProductRepositoryTest {
     }
     @Test
     public void testFindById(){
-        Product  result = productRepository.findById2(0l);
+        Product result = productRepository.findById2(0l);
         assert(null!=result);
         System.out.println(result.toString());
     }

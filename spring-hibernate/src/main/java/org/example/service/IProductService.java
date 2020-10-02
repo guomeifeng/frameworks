@@ -2,8 +2,9 @@ package org.example.service;
 
 
 
-import java.util.List;
 import org.example.entity.Product;
+
+import java.util.List;
 
 public interface IProductService {
     Product get(long id);
