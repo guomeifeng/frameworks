@@ -1,14 +1,9 @@
 package org.example.config;
 
-import org.example.component.DynamicSecurityService;
-import org.example.component.JwtAuthenticationTokenFilter;
-import org.example.component.RestAccessDeniedHandler;
-import org.example.component.RestAuthenticationEntryPoint;
+import org.example.component.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,14 +12,14 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+
 
 /*
  * Created by kelly on 30/09/2020.
  */
-@Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired(required = false)
@@ -57,8 +52,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint())
 
                 .and()
-                .addFilterAfter(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
+        if (null!=dynamicSecurityService){
+            registry.and()
+                    .addFilterBefore( dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+        }
+
+    }
+
+    @ConditionalOnBean(name = "dynamicSecurityService")
+    @Bean
+    public DynamicSecurityFilter dynamicSecurityFilter() {
+        return new DynamicSecurityFilter();
     }
 
     @Override
@@ -78,12 +84,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
+    public RestAccessDeniedHandler accessDeniedHandler(){
         return new RestAccessDeniedHandler();
     }
 
     @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint(){
+    public RestAuthenticationEntryPoint authenticationEntryPoint(){
         return new RestAuthenticationEntryPoint();
     }
 

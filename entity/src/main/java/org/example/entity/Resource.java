@@ -24,23 +24,23 @@ public class Resource implements Serializable {
     private Long id;
 
     @Column(name = "date_created")
-    @ApiModelProperty(value = "创建时间")
+    @ApiModelProperty(value = "Date Created")
     private Date createTime;
 
     @Column(name = "url_name")
-    @ApiModelProperty(value = "资源名称")
+    @ApiModelProperty(value = "Name")
     private String name;
 
     @Column(name = "url")
-    @ApiModelProperty(value = "资源URL")
+    @ApiModelProperty(value = "URL")
     private String url;
 
     @Column(name = "description")
-    @ApiModelProperty(value = "描述")
+    @ApiModelProperty(value = "Description")
     private String description;
 
     @Column(name = "category_id")
-    @ApiModelProperty(value = "资源分类ID")
+    @ApiModelProperty(value = "Category ID")
     private Long categoryId;
 
     private static final long serialVersionUID = 1L;
