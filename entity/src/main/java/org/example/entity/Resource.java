@@ -13,10 +13,11 @@ import java.util.Date;
  * Created by kelly on 5/10/2020.
  */
 @Data
+@Entity
 @Table(name="resource")
-@NamedQuery(name = "FmResource.findById", query = "select name,url from FmResource r where r.id=?1")
+@NamedQuery(name = "Resource.findById", query = "select name,url from Resource r where r.id=?1")
 @ApiModel(value = "Resource Entity")
-public class FmResource implements Serializable {
+public class Resource implements Serializable {
     @Id
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")

@@ -1,9 +1,9 @@
 package org.example.config;
 
 import org.example.component.DynamicSecurityService;
-import org.example.entity.FmResource;
+import org.example.entity.Resource;
 import org.example.service.AdminUserService;
-import org.example.service.FmResourceService;
+import org.example.service.ResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.access.ConfigAttribute;
@@ -23,7 +23,7 @@ public class SpringHibernateSecurityConfig extends SecurityConfig{
     private AdminUserService adminUserService;
 
     @Autowired
-    private FmResourceService fmResourceService;
+    private ResourceService resourceService;
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -36,8 +36,8 @@ public class SpringHibernateSecurityConfig extends SecurityConfig{
             @Override
             public Map<String, ConfigAttribute> loadConfigAttibutes() {
                 Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
-                List<FmResource> resourceList = fmResourceService.findAll();
-                for (FmResource resource : resourceList){
+                List<Resource> resourceList = resourceService.findAll();
+                for (Resource resource : resourceList){
                     map.put(resource.getUrl(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
                 }
                 return map;
