@@ -1,21 +1,25 @@
 package org.example.config;
 
-import org.example.entity.AdminUser;
-import org.example.entity.User;
-import org.example.repository.UserRepository;
+import org.example.component.DynamicSecurityService;
+import org.example.component.JwtAuthenticationTokenFilter;
+import org.example.component.RestAccessDeniedHandler;
+import org.example.component.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.List;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /*
  * Created by kelly on 30/09/2020.
@@ -23,45 +27,69 @@ import java.util.List;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserRepository userRepository;
+    @Autowired(required = false)
+    private DynamicSecurityService dynamicSecurityService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.formLogin()
-          http.httpBasic()
-                .and().authorizeRequests().anyRequest().authenticated();
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
+        //Permit urls in Ignored list
+        for (String url:ignoreUrlsConfig().getUrls()){
+            registry.antMatchers(url).permitAll();
+        }
+        //Permit Options method of cross origin
+        registry.antMatchers(HttpMethod.OPTIONS).permitAll();
+        //require permission
+        registry.and()
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated()
+
+                .and()
+                .csrf()
+                .disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+
+                .and()
+                .addFilterAfter(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService()).passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
     }
-//    @Bean
-//    public DaoAuthenticationProvider authProvider() {
-//        // LimitLoginAuthenticationProvider is my own class which extends DaoAuthenticationProvider
-//        final DaoAuthenticationProvider authProvider = new LimitLoginAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
-//        authProvider.setPasswordEncoder(passwordEncoder());
-//        return authProvider;
-//    }
+
     @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsService() {
-            @Override
-            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                List<User> userList = userRepository.findUsersByName(username);
-                if (userList != null && userList.size() > 0) {
-                    return new AdminUser(userList.get(0));
-                }
-                throw new UsernameNotFoundException("用户名或密码错误");
-            }
-        };
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
-
-    public static void main(String[] args){
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        System.out.println(encoder.encode("123"));
+    @Bean
+    public IgnoreUrlsConfig ignoreUrlsConfig(){
+        return new IgnoreUrlsConfig();
     }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler(){
+        return new RestAccessDeniedHandler();
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint(){
+        return new RestAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
+        return new JwtAuthenticationTokenFilter();
+    }
+
 }

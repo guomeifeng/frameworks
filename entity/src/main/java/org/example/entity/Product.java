@@ -19,7 +19,6 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
-    @ApiModelProperty(value = "Product ID")
     private Long productId;
     @Column(name = "product_name")
     @ApiModelProperty(value = "Product Name")
