@@ -13,6 +13,24 @@ import java.util.List;
 
 @Repository
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
-    @Query(value = "select * from resource r where r.name=?1", nativeQuery = true)
-    public List<Resource> findUsersByName(String name);
+
+    @Query(value = "SELECT\n" +
+            "    ur.id id,\n" +
+            "    ur.create_time createTime,\n" +
+            "    ur.`name` `name`,\n" +
+            "    ur.url url,\n" +
+            "    ur.description description,\n" +
+            "    ur.category_id categoryId\n" +
+            "    FROM\n" +
+            "    ums_admin_role_relation ar\n" +
+            "    LEFT JOIN ums_role r ON ar.role_id = r.id\n" +
+            "    LEFT JOIN ums_role_resource_relation rrr ON r.id = rrr.role_id\n" +
+            "    LEFT JOIN ums_resource ur ON ur.id = rrr.resource_id\n" +
+            "            WHERE\n" +
+            "    ar.admin_id = #{adminId}\n" +
+            "    AND ur.id IS NOT NULL\n" +
+            "    GROUP BY\n" +
+            "    ur.id" , nativeQuery = true)
+
+    public List<Resource> getResourceList(String adminId);
 }

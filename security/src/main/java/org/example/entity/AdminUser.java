@@ -1,9 +1,12 @@
 package org.example.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /*
  * Created by kelly on 30/09/2020.
@@ -11,14 +14,19 @@ import java.util.Collection;
 public class AdminUser implements UserDetails {
 
     private User user;
+    private List<Resource> resourceList;
 
-    public AdminUser(User user){
+    public AdminUser(User user,List<Resource> resourceList) {
         this.user = user;
+        this.resourceList = resourceList;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        //return roles list of current user
+        return resourceList.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getId() + ":" + role.getName()))
+                .collect(Collectors.toList());
     }
 
     @Override
