@@ -9,5 +9,5 @@ import java.util.Map;
  */
 
 public interface DynamicSecurityService {
-    Map<String, ConfigAttribute> loadConfigAttibutes();
+    Map<String, ConfigAttribute> loadConfigAttributes();
 }

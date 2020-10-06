@@ -34,7 +34,7 @@ public class SpringHibernateSecurityConfig extends SecurityConfig{
     public DynamicSecurityService dynamicSecurityService(){
         return new DynamicSecurityService() {
             @Override
-            public Map<String, ConfigAttribute> loadConfigAttibutes() {
+            public Map<String, ConfigAttribute> loadConfigAttributes() {
                 Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
                 List<Resource> resourceList = resourceService.findAll();
                 for (Resource resource : resourceList){
