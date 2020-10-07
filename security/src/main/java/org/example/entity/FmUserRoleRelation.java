@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name="fm_user_role_relation")
-public class FmAdminRoleRelation implements Serializable {
+public class FmUserRoleRelation implements Serializable {
     @Id
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")

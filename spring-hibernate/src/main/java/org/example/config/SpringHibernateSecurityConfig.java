@@ -2,12 +2,15 @@ package org.example.config;
 
 import org.example.component.DynamicSecurityService;
 import org.example.entity.Resource;
-import org.example.service.AdminUserService;
 import org.example.service.ResourceService;
+import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 import java.util.Map;
@@ -17,17 +20,23 @@ import java.util.concurrent.ConcurrentHashMap;
 /*
  * Created by kelly on 5/10/2020.
  */
+@Configuration
 public class SpringHibernateSecurityConfig extends SecurityConfig{
 
     @Autowired
-    private AdminUserService adminUserService;
+    private UserService userService;
 
     @Autowired
     private ResourceService resourceService;
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return username -> adminUserService.loadUserByUsername(username);
+        return new UserDetailsService() {
+            @Override
+            public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                return userService.loadUserByUsername(username);
+            }
+        };
     }
 
     @Bean

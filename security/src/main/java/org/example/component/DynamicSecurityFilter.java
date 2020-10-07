@@ -12,6 +12,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /*
@@ -36,7 +38,7 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpRequest request = (HttpRequest) servletRequest;
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         FilterInvocation fi = new FilterInvocation(servletRequest, servletResponse, filterChain);
         //OPTIONS of cross origins pass directly
         if (request.getMethod().equals(HttpMethod.OPTIONS)){

@@ -1,6 +1,9 @@
 package org.example.service;
 
 import org.example.entity.AdminUser;
+import org.example.entity.FmRole;
+import org.example.entity.Resource;
+import org.example.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,11 +12,11 @@ import java.util.List;
 /*
  * Created by kelly on 5/10/2020.
  */
-public interface AdminUserService {
+public interface UserService {
     /**
      * 根据用户名获取后台管理员
      */
-    AdminUser getAdminByUsername(String username);
+    User getUserByUsername(String username);
 
     /**
      * 注册功能
@@ -63,12 +66,12 @@ public interface AdminUserService {
     /**
      * 获取用户对于角色
      */
-//    List<UmsRole> getRoleList(Long adminId);
+    List<FmRole> getRoleList(Long adminId);
 
     /**
      * 获取指定用户的可访问资源
      */
-//    List<UmsResource> getResourceList(Long adminId);
+    List<Resource> getResourceList(Long adminId);
 
     /**
      * 修改密码

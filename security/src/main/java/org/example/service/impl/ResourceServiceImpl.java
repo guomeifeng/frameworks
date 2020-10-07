@@ -12,7 +12,7 @@ import java.util.List;
  * Created by kelly on 5/10/2020.
  */
 @Service
-public class FmResourceServiceImpl implements ResourceService {
+public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
     private ResourceRepository resourceRepository;

@@ -1,6 +1,7 @@
 package org.example.config;
 
 import org.example.component.*;
+import org.example.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -36,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         registry.antMatchers(HttpMethod.OPTIONS).permitAll();
         //require permission
         registry.and()
+                .formLogin()
+
+                .and()
                 .authorizeRequests()
                 .anyRequest()
                 .authenticated()
@@ -45,6 +49,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+
 
                 .and()
                 .exceptionHandling()
@@ -92,6 +98,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter(){
         return new JwtAuthenticationTokenFilter();
+    }
+
+    @Bean
+    public JwtTokenUtil jwtTokenUtil() {
+        return new JwtTokenUtil();
     }
 
     @ConditionalOnBean(name = "dynamicSecurityService")

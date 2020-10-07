@@ -15,22 +15,22 @@ import java.util.List;
 public interface ResourceRepository extends JpaRepository<Resource, Long> {
 
     @Query(value = "SELECT\n" +
-            "    ur.id id,\n" +
-            "    ur.create_time createTime,\n" +
-            "    ur.`name` `name`,\n" +
-            "    ur.url url,\n" +
-            "    ur.description description,\n" +
-            "    ur.category_id categoryId\n" +
+            "    ur.id,\n" +
+            "    ur.date_created,\n" +
+            "    ur.url_name,\n" +
+            "    ur.url,\n" +
+            "    ur.description,\n" +
+            "    ur.category_id\n" +
             "    FROM\n" +
-            "    ums_admin_role_relation ar\n" +
-            "    LEFT JOIN ums_role r ON ar.role_id = r.id\n" +
-            "    LEFT JOIN ums_role_resource_relation rrr ON r.id = rrr.role_id\n" +
-            "    LEFT JOIN ums_resource ur ON ur.id = rrr.resource_id\n" +
+            "    fm_user_role_relation ar\n" +
+            "    LEFT JOIN role r ON ar.role_id = r.id\n" +
+            "    LEFT JOIN fm_role_resource_relation rrr ON r.id = rrr.role_id\n" +
+            "    LEFT JOIN resource ur ON ur.id = rrr.resource_id\n" +
             "            WHERE\n" +
-            "    ar.admin_id = #{adminId}\n" +
+            "    ar.user_id = ?1\n" +
             "    AND ur.id IS NOT NULL\n" +
             "    GROUP BY\n" +
             "    ur.id" , nativeQuery = true)
 
-    public List<Resource> getResourceList(String adminId);
+    public List<Resource> getResourceListByUserId(Long userId);
 }
