@@ -49,14 +49,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
-
-
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler())
-                .authenticationEntryPoint(authenticationEntryPoint())
-
+//
+//                .and()
+//                .exceptionHandling()
+//                .accessDeniedHandler(accessDeniedHandler())
+//                .authenticationEntryPoint(authenticationEntryPoint())
+//
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 

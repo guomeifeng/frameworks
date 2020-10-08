@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>entity</artifactId>
-    <version>1.0.0</version>
+    <artifactId>common</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.github.pagehelper</groupId>

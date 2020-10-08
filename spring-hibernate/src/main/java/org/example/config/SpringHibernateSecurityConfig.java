@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.ConfigAttribute;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /*
  * Created by kelly on 5/10/2020.
  */
-@Configuration
+@EnableWebSecurity
 public class SpringHibernateSecurityConfig extends SecurityConfig{
 
     @Autowired

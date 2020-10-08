@@ -9,7 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
         <module name="spring-hibernate" />
-        <module name="entity" />
+        <module name="security" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,7 +19,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="common" options="-parameters" />
-      <module name="entity" options="-parameters" />
+      <module name="security" options="-parameters" />
       <module name="spring-hibernate" options="-parameters" />
       <module name="spring-mybatis" options="-parameters" />
     </option>

@@ -1,2 +1,8 @@
-C:\Users\kelly\Documents\Projects\frameworks\entity\src\main\java\org\example\entity\Product.java
-C:\Users\kelly\Documents\Projects\frameworks\entity\src\main\java\org\example\entity\User.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\api\CommonResult.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\entity\Product.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\service\impl\RedisServiceImpl.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\api\IErrorCode.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\service\RedisService.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\api\ResultCode.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\entity\User.java
+C:\Users\kelly\Documents\Projects\frameworks\common\src\main\java\org\example\config\BaseRedisConfig.java
