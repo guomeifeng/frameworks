@@ -7,7 +7,6 @@ import org.example.entity.Resource;
 import org.example.entity.User;
 import org.example.repository.ResourceRepository;
 import org.example.repository.UserRepository;
-import org.example.repository.UserRoleRepository;
 import org.example.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

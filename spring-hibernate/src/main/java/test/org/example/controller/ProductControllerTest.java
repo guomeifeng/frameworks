@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -62,6 +66,8 @@ public class ProductControllerTest {
     *
     */
     @Test
+    @Transactional
+    @Rollback
     public void testAdd() throws Exception {
         RequestBuilder request = null;
         Product product = new Product();
@@ -89,9 +95,10 @@ public class ProductControllerTest {
     *
     */
     @Test
+    @WithAnonymousUser
     public void testList() throws Exception {
         RequestBuilder request = null;
-
+        System.out.println("ttttttttttttt");
         request = MockMvcRequestBuilders.get("/product/list");
 
         mockMvc.perform(request)
