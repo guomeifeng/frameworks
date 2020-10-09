@@ -2,10 +2,14 @@ package org.example.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.HttpMethod;
 import org.example.entity.Product;
 import org.example.service.IProductService;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
+
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Product Management
@@ -29,9 +33,9 @@ public class ProductController {
     public Object add(@RequestBody Product product) {
         return this.iProductService.add(product) ;
     }
-    @RequestMapping(value="/list")
+    @RequestMapping(value="/list", method = RequestMethod.GET)
     @ApiOperation(value = "Get Products List", notes = "Get All Products")
-    public Object list() {
+    public @ResponseBody List<Product> list() {
         return this.iProductService.list() ;
     }
 

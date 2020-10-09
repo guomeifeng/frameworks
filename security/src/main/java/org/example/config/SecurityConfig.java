@@ -59,14 +59,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        if (null!=dynamicSecurityService){
-            registry.and()
-                    .addFilterBefore( dynamicSecurityFilter(), FilterSecurityInterceptor.class);
-        }
-
+//        if (null!=dynamicSecurityService){
+//            registry.and()
+//                    .addFilterBefore( dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+//        }
     }
-
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

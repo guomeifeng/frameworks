@@ -1,6 +1,5 @@
 package test.org.example.config;
 
-import com.google.gson.Gson;
 import org.example.ApplicationHibernateExample;
 import org.example.entity.Product;
 import org.junit.Before;
@@ -10,21 +9,16 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-import javax.annotation.Resource;
+
 import javax.transaction.Transactional;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * ProductController Tester.
@@ -34,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @version 1.0
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = ApplicationHibernateExample.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@AutoConfigureMockMvc
 public class SecurityConfigMockTest {
 
@@ -79,12 +73,16 @@ public class SecurityConfigMockTest {
      *
      */
     @Test
+    @WithMockUser()
     public void testList() throws Exception {
         System.out.println("1.Test Correct Username and Password");
         String username = "admin";
         String password = "123";
-        ResponseEntity<Product> responseEntity =  this.testRestTemplate.withBasicAuth(username, password).getForEntity("/product/list", Product.class);
-        System.out.println(responseEntity);
+        ResponseEntity<Product[]> responseEntity =  this.testRestTemplate.withBasicAuth(username, password).getForEntity("/product/list", Product[].class);
+        Product[] products = responseEntity.getBody();
+        MediaType contentType = responseEntity.getHeaders().getContentType();
+        HttpStatus statusCode = responseEntity.getStatusCode();
+        System.out.println(statusCode);
     }
 
 
