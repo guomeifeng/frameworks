@@ -3,6 +3,7 @@ package org.example.repository;
 import org.example.entity.Product;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     public Product findById2(Long id);
     @Query(value = "select * from product p where p.product_name=?1", nativeQuery = true)
     public List<Product> findProductsByName(String productName);
+
     public List<Product> findAll();
 }

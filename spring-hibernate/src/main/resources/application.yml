@@ -20,7 +20,7 @@ spring:
     hibernate:
       ddl-auto: update
       naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
-      dialect: org.hibernate.dialect.MySQL5Dialect
+      dialect: org.hibernate.dialect.MySQLDialect
 debug: true
 jwt:
   tokenHeader: Authorization #JWT存储的请求头

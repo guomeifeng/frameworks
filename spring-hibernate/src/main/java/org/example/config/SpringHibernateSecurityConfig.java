@@ -22,7 +22,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by kelly on 5/10/2020.
  */
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true) //Start method security and authentication
+@EnableGlobalMethodSecurity(securedEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true) //Start method security and authentication
 public class SpringHibernateSecurityConfig extends SecurityConfig{
 
     @Autowired

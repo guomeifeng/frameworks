@@ -2,11 +2,9 @@ package org.example.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.HttpMethod;
 import org.example.entity.Product;
-import org.example.service.IProductService;
+import org.example.service.ProductService;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,7 +19,7 @@ import java.util.List;
 public class ProductController {
 
     @Resource
-    private IProductService iProductService;
+    private ProductService iProductService;
 
     @RequestMapping(value="/get/{id}")
     @ApiOperation(value = "Get Product Info By Id", notes = "Get ONE product by ID")

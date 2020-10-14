@@ -37,7 +37,6 @@ class UserRepositoryTest {
     }
 
     @Test
-    @Transactional
     @Rollback
     void save(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -45,9 +44,6 @@ class UserRepositoryTest {
         user1.setUsername("enjoy3");
         user1.setPassword(encoder.encode("12345"));
         userRepository.save(user1);
-        User user = new User();
-        user.setUsername("enjoy12222222222222222222222222222222222222222222222222222222222222222222222ssssssssssssssssssssssssssssssssssssssssssssssssssssssccccccccccccccccccccccccccccccccccccccccccccccccccccc");
-        user.setPassword(encoder.encode("1234"));
-        userRepository.save(user);
+
     }
 }

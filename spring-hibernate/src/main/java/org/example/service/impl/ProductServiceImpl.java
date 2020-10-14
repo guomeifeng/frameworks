@@ -3,14 +3,15 @@ package org.example.service.impl;
 
 import org.example.entity.Product;
 import org.example.repository.ProductRepository;
-import org.example.service.IProductService;
+import org.example.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements IProductService {
+public class ProductServiceImpl implements ProductService {
 
 //    @Resource
     @Autowired
@@ -26,6 +27,7 @@ public class ProductServiceImpl implements IProductService {
     public Product add(Product product) {
         return productRepository.save(product);
     }
+
 
     @Override
     public List<Product> list() {
