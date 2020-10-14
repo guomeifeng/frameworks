@@ -7,9 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -35,11 +37,17 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void save(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User user1 = new User();
+        user1.setUsername("enjoy3");
+        user1.setPassword(encoder.encode("12345"));
+        userRepository.save(user1);
         User user = new User();
-        user.setUsername("enjoy");
-        user.setPassword(encoder.encode("123"));
+        user.setUsername("enjoy12222222222222222222222222222222222222222222222222222222222222222222222ssssssssssssssssssssssssssssssssssssssssssssssssssssssccccccccccccccccccccccccccccccccccccccccccccccccccccc");
+        user.setPassword(encoder.encode("1234"));
         userRepository.save(user);
     }
 }
