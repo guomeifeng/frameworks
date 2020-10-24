@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,6 +39,7 @@ public class ProductRepositoryTest {
         System.out.println(result.toString());
     }
     @Test
+    @Transactional
     @Rollback
     public void testSave(){
         Product product = new Product();

@@ -1,0 +1,3 @@
+org\example\repository\SecurityTestDataPrep.class
+org\example\repository\UserRepositoryTest.class
+org\example\repository\ProductRepositoryTest.class

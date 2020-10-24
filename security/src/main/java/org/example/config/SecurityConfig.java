@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.util.List;
 
 
 /*
@@ -30,15 +31,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = http.authorizeRequests();
         //Permit urls in Ignored list
+
         for (String url:ignoreUrlsConfig().getUrls()){
             registry.antMatchers(url).permitAll();
         }
+
         //Permit Options method of cross origin
         registry.antMatchers(HttpMethod.OPTIONS).permitAll();
+        if (null!=dynamicSecurityService){
+            registry.and()
+                    .addFilterBefore( dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+        }
         //require permission
         registry
-                .and()
-                .formLogin()
+//                .and()
+//                .formLogin()
 
                 .and()
                 .authorizeRequests()
@@ -59,10 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-        if (null!=dynamicSecurityService){
-            registry.and()
-                    .addFilterBefore( dynamicSecurityFilter(), FilterSecurityInterceptor.class);
-        }
+
     }
 
     @Override
@@ -78,7 +82,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public IgnoreUrlsConfig ignoreUrlsConfig(){
-        return new IgnoreUrlsConfig();
+        IgnoreUrlsConfig config = new IgnoreUrlsConfig();
+        config.getUrls().add("/swagger-ui.html");
+        config.getUrls().add("/swagger-resources/**");
+        config.getUrls().add("/swagger/**");
+        config.getUrls().add("/v2/api-docs");
+        return config;
     }
 
     @Bean

@@ -37,6 +37,7 @@ class UserRepositoryTest {
     }
 
     @Test
+    @Transactional
     @Rollback
     void save(){
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

@@ -3,7 +3,6 @@ package org.example.component;
 import org.example.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpRequest;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
 import org.springframework.security.access.intercept.InterceptorStatusToken;
@@ -12,7 +11,6 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 import javax.servlet.*;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
@@ -43,11 +41,13 @@ public class DynamicSecurityFilter extends AbstractSecurityInterceptor implement
         //OPTIONS of cross origins pass directly
         if (request.getMethod().equals(HttpMethod.OPTIONS)){
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+            return;
         }
         //White labels pass directly
         PathMatcher pathMatcher = new AntPathMatcher();
         for (String path : ignoreUrlsConfig.getUrls()){
             fi.getChain().doFilter(fi.getRequest(), fi.getResponse());
+            return;
         }
 
         InterceptorStatusToken token = super.beforeInvocation(fi);

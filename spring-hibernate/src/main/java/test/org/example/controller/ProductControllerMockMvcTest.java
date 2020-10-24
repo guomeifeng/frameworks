@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
+
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
@@ -32,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = ApplicationHibernateExample.class)
 //@AutoConfigureMockMvc
-public class ProductControllerTest {
+public class ProductControllerMockMvcTest {
 //    @Resource
     private MockMvc mockMvc;
     @Resource
@@ -90,20 +94,35 @@ public class ProductControllerTest {
 
     /**
     *
-    * Method: list()
+    * Test getting products list with an invalid user and role
     *
     */
-    @Test
-    public void testList() throws Exception {
+    @Test(expected = NestedServletException.class)
+    @WithMockUser(username = "enjoy", password = "123", roles = {"ADMIN"})
+    public void testInvalidRole() throws Exception {
         RequestBuilder request = null;
-        System.out.println("ttttttttttttt");
+
         request = MockMvcRequestBuilders.get("/product/list");
 
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andDo(print());
-
     }
+    /**
+     *
+     * Test getting product list using valid username role and password
+     *
+     */
+    @Test
+    @WithMockUser(username = "enjoy", password = "123", roles = {"USER"})
+    public void testValidUserAndRole() throws Exception {
+        RequestBuilder request = null;
 
+        request = MockMvcRequestBuilders.get("/product/list");
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
 
 } 

@@ -1,6 +1,7 @@
 package test.org.example.config;
 
 import org.example.ApplicationHibernateExample;
+import org.example.config.IgnoreUrlsConfig;
 import org.example.entity.Product;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,10 @@ public class SecurityConfigMockTest {
 
     @Autowired
     private TestRestTemplate testRestTemplate;
+
+//    @Autowired
+    private IgnoreUrlsConfig ignoreUrlsConfig;
+
     @Before
     public void before() throws Exception {
         System.out.println("ProductControllerTest Begins...");
@@ -81,6 +86,8 @@ public class SecurityConfigMockTest {
         MediaType contentType = responseEntity.getHeaders().getContentType();
         HttpStatus statusCode = responseEntity.getStatusCode();
         System.out.println(statusCode);
+        ignoreUrlsConfig = new IgnoreUrlsConfig();
+        this.ignoreUrlsConfig.getUrls().stream().forEach(s ->System.out.println(s.trim()));
     }
 
 
