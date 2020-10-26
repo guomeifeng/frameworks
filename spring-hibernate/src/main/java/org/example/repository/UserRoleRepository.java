@@ -16,4 +16,5 @@ import java.util.List;
 public interface UserRoleRepository extends JpaRepository<FmUserRoleRelation, Long>{
 
 
+    List<Long> getUserIdList(Long roleId);
 }

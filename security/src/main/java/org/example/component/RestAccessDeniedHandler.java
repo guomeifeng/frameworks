@@ -12,6 +12,7 @@ import java.io.IOException;
 
 /*
  * Created by kelly on 5/10/2020.
+ * 解决认证过的用户访问产生的权限异常 handled by ExceptionTranslationFilter.class
  */
 
 public class RestAccessDeniedHandler implements AccessDeniedHandler {

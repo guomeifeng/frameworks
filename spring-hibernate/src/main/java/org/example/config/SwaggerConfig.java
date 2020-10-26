@@ -17,8 +17,8 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("org.example.controller")
-                .title("mall后台系统")
-                .description("mall后台相关接口文档")
+                .title("frameworks后台系统")
+                .description("frameworks后台相关接口文档")
                 .contactName("kelly")
                 .version("1.0")
                 .enableSecurity(false)

@@ -7,7 +7,9 @@ import org.example.entity.Resource;
 import org.example.entity.User;
 import org.example.repository.ResourceRepository;
 import org.example.repository.UserRepository;
+import org.example.service.UserCacheService;
 import org.example.service.UserService;
+import org.example.util.JwtTokenUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +27,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
-//    @Autowired
-//    private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
@@ -34,22 +36,27 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private ResourceRepository resourceRepository;
 //    @Autowired
-//    private UmsAdminLoginLogMapper loginLogMapper;
-//    @Autowired
-//    private UmsAdminCacheService adminCacheService;
+//    private UserLoginLogMapper loginLogMapper;
+    @Autowired
+    private UserCacheService userCacheService;
 
     @Override
     public User getUserByUsername(String username) {
-//        User user = adminCacheService.getAdmin(username);
-//        if(user!=null) return  admin;
-//        UmsAdminExample example = new UmsAdminExample();
-//        example.createCriteria().andUsernameEqualTo(username);
+        User user = userCacheService.getUser(username);
+        if(user!=null) return  user;
+        UserExample example = new UserExample();
+        example.createCriteria().andUsernameEqualTo(username);
         List<User> userList = userRepository.findUsersByName(username);
         if (userList != null && userList.size() > 0) {
-            User user = userList.get(0);
-//            adminCacheService.setAdmin(admin);
+            user = userList.get(0);
+            userCacheService.setUser(user);
             return user;
         }
+        return null;
+    }
+
+    @Override
+    public AdminUser register(User user) {
         return null;
     }
 
@@ -64,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public AdminUser getItem(Long id) {
+    public User getItem(Long id) {
         return null;
     }
 
@@ -95,13 +102,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<Resource> getResourceList(Long userId) {
-//        List<Resource> resourceList = adminCacheService.getResourceList(adminId);
-//        if(CollUtil.isNotEmpty(resourceList)){
-//            return  resourceList;
-//        }
-        List<Resource> resourceList = resourceRepository.getResourceListByUserId(userId);
+        List<Resource> resourceList = userCacheService.getResourceList(userId);
         if(CollUtil.isNotEmpty(resourceList)){
-//            adminCacheService.setResourceList(adminId,resourceList);
+            return  resourceList;
+        }
+        resourceList = resourceRepository.getResourceListByUserId(userId);
+        if(CollUtil.isNotEmpty(resourceList)){
+            userCacheService.setResourceList(userId,resourceList);
         }
         return resourceList;
     }

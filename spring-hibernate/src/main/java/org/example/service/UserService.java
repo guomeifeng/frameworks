@@ -21,7 +21,7 @@ public interface UserService {
     /**
      * 注册功能
      */
-//    AdminUser register(UmsAdminParam umsAdminParam);
+    AdminUser register(User user);
 
     /**
      * 登录功能
@@ -40,7 +40,7 @@ public interface UserService {
     /**
      * 根据用户id获取用户
      */
-    AdminUser getItem(Long id);
+    User getItem(Long id);
 
     /**
      * 根据用户名或昵称分页查询用户
